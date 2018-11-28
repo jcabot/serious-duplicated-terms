@@ -21,7 +21,7 @@
  * @subpackage Plugin_Name/includes
  * @author     Your Name <email@example.com>
  */
-class Plugin_Name_Loader {
+class Serious_Duplicated_Terms_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.
