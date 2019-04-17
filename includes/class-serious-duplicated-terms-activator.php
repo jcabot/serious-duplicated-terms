@@ -9,7 +9,6 @@
  * @subpackage Serious_Duplicated_Terms\includes
  */
 
-
 class Serious_Duplicated_Terms_Activator{
 
 	public static function activate() {
@@ -17,4 +16,3 @@ class Serious_Duplicated_Terms_Activator{
 	}
 
 }
-

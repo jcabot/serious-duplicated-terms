@@ -14,31 +14,39 @@ class Serious_Duplicated_Terms_Admin {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @access   private
+	 * @access   protected
 	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
-	private $plugin_name;
+	protected $plugin_name;
 
 	/**
 	 * The version of this plugin.
 	 *
-	 * @access   private
+	 * @access   protected
 	 * @var      string    $version    The current version of this plugin.
 	 */
-	private $version;
-
+	protected $version;
+	
 	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @param      string    $plugin_name       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $version) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+		$this->load_dependencies();
 
 	}
+	
+	protected function load_dependencies() {
+		require_once plugin_dir_path( dirname( __FILE__ ) ) .  'admin/partials/class-serious-duplicated-terms-admin-display.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) .  'admin/partials/class-serious-duplicated-terms-admin-display-ext.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) .  'admin/partials/class-serious-duplicated-terms-admin-settings.php';
+	}
+	
 
 	/**
 	 * Register the stylesheets for the admin area.
@@ -83,7 +91,5 @@ class Serious_Duplicated_Terms_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/serious-duplicated-terms-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
-
 }
-
-
+	

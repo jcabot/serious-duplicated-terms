@@ -87,10 +87,12 @@ class Serious_Duplicated_Terms {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-serious-duplicated-terms-i18n.php';
 
-/**
- * The class responsible for defining all actions that occur in the admin area.
- */
-require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-serious-duplicated-terms-admin.php';
+		/**
+		 * The class responsible for defining all actions that occur in the admin area.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-serious-duplicated-terms-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-serious-duplicated-terms-admin-ext.php';
+		
 
 		$this->loader = new Serious_Duplicated_Terms_Loader();
 	}
@@ -108,17 +110,22 @@ require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-serious-dupli
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 	}
 
-/**
- * Register all of the hooks related to the admin area functionality
- * of the plugin.
- *
- * @access   private
- */
-private function define_admin_hooks() {
-	$plugin_admin = new Serious_Duplicated_Terms_Admin( $this->get_plugin_name(), $this->get_version() );
-	$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-	$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-}
+	/**
+	 * Register all of the hooks related to the admin area functionality
+	 * of the plugin.
+	 *
+	 * @access   private
+	 */
+	private function define_admin_hooks() {
+		$plugin_admin = new Serious_Duplicated_Terms_Admin_Ext( $this->get_plugin_name(), $this->get_version() );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$plugin_settings=null;
+	$plugin_settings = new Serious_Duplicated_Terms_Admin_Settings( $this->get_plugin_name(), $this->get_version(),$plugin_admin );
+	$this->loader->add_action( 'admin_init', $plugin_settings, 'init_settings' ); 	// Registering also the plugin settings
+	$plugin_display = new Serious_Duplicated_Terms_Admin_Display_Ext( $this->get_plugin_name(), $this->get_version(), $plugin_admin, $plugin_settings );
+	
+	}
 
 
 	/**

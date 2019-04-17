@@ -8,8 +8,7 @@
  * @package    Serious_Duplicated_Terms
  * @subpackage Serious_Duplicated_Terms\includes
  */
-
-
+		
 class Serious_Duplicated_Terms_Deactivator{
 
 	public static function deactivate() {
@@ -17,4 +16,3 @@ class Serious_Duplicated_Terms_Deactivator{
 	}
 
 }
-

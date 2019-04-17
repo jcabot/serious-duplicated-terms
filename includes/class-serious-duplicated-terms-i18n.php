@@ -1,6 +1,5 @@
 <?php
-
-
+	
 /**
  * Define the internationalization functionality
  *
@@ -15,7 +14,6 @@
 
 class Serious_Duplicated_Terms_i18n {
 
-
 	/**
 	 * Load the plugin text domain for translation.
 	 *
@@ -29,8 +27,4 @@ class Serious_Duplicated_Terms_i18n {
 		);
 
 	}
-
-
-
 }
-
