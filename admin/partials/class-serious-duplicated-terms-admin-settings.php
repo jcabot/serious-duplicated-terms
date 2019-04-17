@@ -98,7 +98,7 @@ class Serious_Duplicated_Terms_Admin_Settings{
 		
 	/** 
 	*  Rendering the settings page
-			 		*/
+	*/
 	public function configuration_duplicated_terms() {
 		// Check required user capability
 		if ( !current_user_can( 'manage_options' ) )  {
