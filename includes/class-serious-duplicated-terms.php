@@ -116,18 +116,20 @@ class Serious_Duplicated_Terms {
 	 *
 	 * @access   private
 	 */
-	private function define_admin_hooks() {
+	protected function define_admin_hooks() {
 		$plugin_admin = new Serious_Duplicated_Terms_Admin_Ext( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$plugin_settings=null;
-	$plugin_settings = new Serious_Duplicated_Terms_Admin_Settings( $this->get_plugin_name(), $this->get_version(),$plugin_admin );
-	$this->loader->add_action( 'admin_init', $plugin_settings, 'init_settings' ); 	// Registering also the plugin settings
-	$plugin_display = new Serious_Duplicated_Terms_Admin_Display_Ext( $this->get_plugin_name(), $this->get_version(), $plugin_admin, $plugin_settings );
-	$this->loader->add_action( 'admin_menu', $plugin_display, 'init_admin_menu' ); 	// Registering also the main plugin menu
-	
-	
+		$plugin_settings = new Serious_Duplicated_Terms_Admin_Settings( $this->get_plugin_name(), $this->get_version(),$plugin_admin );
+		$this->loader->add_action( 'admin_init', $plugin_settings, 'init_settings' ); 	// Registering also the plugin settings
+		$plugin_display = new Serious_Duplicated_Terms_Admin_Display_Ext( $this->get_plugin_name(), $this->get_version(), $plugin_admin, $plugin_settings );
+		$this->loader->add_action( 'admin_menu', $plugin_display, 'init_admin_menu' ); 	// Registering also the main plugin menu
+		$this->define_additional_admin_hooks($plugin_admin);
 	}
+	
+	protected function define_additional_admin_hooks($plugin_admin){}
+	
 
 
 	/**

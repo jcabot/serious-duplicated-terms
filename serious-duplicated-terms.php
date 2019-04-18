@@ -72,7 +72,7 @@ register_deactivation_hook( __FILE__, 'deactivate_serious_duplicated_terms' );
  * admin-specific hooks, and public-facing site hooks.
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-serious-duplicated-terms.php';
-
+require plugin_dir_path( __FILE__ ) . 'includes/class-serious-duplicated-terms-ext.php';
 /**
  * Begins execution of the plugin.
  *
@@ -84,7 +84,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-serious-duplicated-terms.p
  */
 function run_serious_duplicated_terms() {
 
-	$plugin = new Serious_Duplicated_Terms();
+	$plugin = new Serious_Duplicated_Terms_Ext();
 	$plugin->run();
 
 }

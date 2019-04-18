@@ -22,13 +22,34 @@ class Serious_Duplicated_Terms_Admin_Display_Ext extends Serious_Duplicated_Term
 		echo '<h1>' . 'Analysis Duplicated Terms'. '</h1>' . "\n";
 		echo '</div>' . "\n";
 
-		$similar_tags= $this->admin.similar_tags();
+		$similar_tags= $this->admin->similar_tags();
 		if (!empty($similar_tags))
 		{
+			$admin_url=esc_url( admin_url( 'admin-post.php' ) );
+			echo '<div class="wrap">' . "\n";
+			echo '<form action="'.$admin_url.'" method="post" >';
+			echo "<input type='hidden' name='action' value='duplicated-tags-form' />";
+			echo "<table>";
+			echo '<th width="40%"> Tag A </th>';
+			echo '<th width="40%"> Tag B </th>';
+			echo '<th width="20%"> Merge? </th>';
+
 			foreach ( $similar_tags as $couple )
 			{
-				echo $couple[1]['name'] . ' similar to ' . $couple[2]['name'];
+				$tag1=$couple[0];
+				$tag2=$couple[1];
+				echo '<tr><td>' . $tag1->name . '</td><td>' . $tag2->name . '</td><td><input type="checkbox" name="' . $tag1->term_id . '" value="'. $tag2->term_id .'" /> </td></tr>';
 			}
+			echo '</table>';
+			submit_button();
+			echo '</form>';
+			echo '</div>' . "\n";
 		}
-	}				
+		else echo 'Congrats! No tags to merge';
+	}
+
+
+
+
+
 }
