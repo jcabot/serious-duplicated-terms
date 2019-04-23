@@ -58,11 +58,55 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 				$tag2=$tags2[$j];
 				if($this->compare_terms($tag1->name, $tag2->name, $maxdistance))
 					array_push($similar_tags, array($tag1,$tag2));
-
 			}
 		}
 		return $similar_tags;
+	}
 
+	public function similar_categories()
+	{
+		$options = get_option( 'configuration' );
+		$maxdistance = $options['maxDistance'];
+
+		$cats1=$this->get_categories();
+		$cats2=$this->get_categories();
+
+		$similar_cats=array();
+		for ($i=0, $len=count($cats1); $i<$len; $i++)  // We use index-based iterators to avoid symmetric comparisons
+		{
+			$cat1=$cats1[$i];
+			for ($j=$i+1; $j<$len; $j++)
+			{
+				$cat2=$cats2[$j];
+				if($this->compare_terms($cat1->name, $cat2->name, $maxdistance))
+					array_push($similar_cats, array($cat1,$cat2));
+
+			}
+		}
+		return $similar_cats;
+	}
+
+	public function similar_terms()
+	{
+		$options = get_option( 'configuration' );
+		$maxdistance = $options['maxDistance'];
+
+		$cats=$this->get_categories();
+		$tags=$this->get_tags();
+
+		$similar_terms=array();
+		for ($i=0, $len=count($cats); $i<$len; $i++)  // We use index-based iterators to avoid symmetric comparisons
+		{
+			$cat=$cats[$i];
+			for ($j=0, $len_tags=count($tags); $j<$len_tags; $j++)
+			{
+				$tag=$tags[$j];
+				if($this->compare_terms($cat->name, $tag->name, $maxdistance))
+					array_push($similar_terms, array($cat,$tag));
+
+			}
+		}
+		return $similar_terms;
 	}
 
 	public function manage_duplicates() {
@@ -84,7 +128,6 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 					)
 				) );
 
-
 				$objects_term_remove = get_posts( array(
 					'numberposts' => - 1,
 					'tax_query'   => array(
@@ -99,15 +142,16 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 				//We can now update at once all the rest
 				$updated = $wpdb->update( $wpdb->prefix . 'term_relationships', array( 'term_taxonomy_id' => $term_keep->term_taxonomy_id ),
 					array( 'term_taxonomy_id' => $term_remove->term_taxonomy_id ), array( '%d' ), array( '%d' ) );
-				if ( false !== $updated ) {  //if a post was already linked to the ToKeep term, the update could fail due to a duplication
-					$wpdb->delete( $wpdb->prefix . 'term_taxonomy', array( 'term_taxonomy_id' => $term_remove->term_taxonomy_id ), array( '%d' ) ); //tags cannot have parents so we don't need to process potential dangling children
+				if ( false !== $updated ) {
+					$wpdb->update( $wpdb->prefix . 'term_taxonomy', array( 'parent' => $term_keep->term_id),array( 'parent' => $term_remove->term_id ), array( '%d' )); //processing potentially dangling children
+					$wpdb->delete( $wpdb->prefix . 'term_taxonomy', array( 'term_taxonomy_id' => $term_remove->term_taxonomy_id ), array( '%d' ),array( '%d' ) );
 					$wpdb->delete( $wpdb->prefix . 'terms', array( 'term_id' => $term_remove->term_id ), array( '%d' ) );
 					$wpdb->delete( $wpdb->prefix . 'termmeta', array( 'term_id' => $term_remove->term_id ), array( '%d' ) );
 				}
 			}
 		}
 
-		wp_redirect(admin_url('admin.php?page=analysis' )); //this will display the contents of the post variable so good for debugging but just change it to an empty value or some other string
+		wp_redirect(admin_url('admin.php?page=analysis' ));
 		exit;
     }
 
