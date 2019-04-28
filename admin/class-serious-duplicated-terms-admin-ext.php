@@ -25,7 +25,7 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 	 * Comparing the two strings for similarity
 	 *
 	 **/
-	public function compare_terms( $a, $b, $max_distance){
+	public function compare_terms( $a, $b, $levenshtein, $max_distance){
 		$similars=false;
 		if( strcasecmp($a, $b) == 0 ) return true; //case insensitive comparison
 
@@ -33,7 +33,7 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 		$pos2 = stripos($b, $a);
 		if ($pos1 !== false || $pos2 !== false) return true;
 
-		if(isset($max_distance))
+		if($levenshtein)
 		{
 			$distance = levenshtein($a, $b);
 			if($distance>-1 && $distance<=$max_distance) return true;
@@ -43,8 +43,12 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 
 	public function similar_tags()
 	{
-		$options = get_option( 'configuration' );
+		$options = get_option( 'duplicated-configuration' );
+		if(isset($options['levenshtein'])) 	$levenshtein=true;
+		else $levenshtein=false;
+
 		$maxdistance = $options['maxDistance'];
+		if($maxdistance=="") $maxdistance=0;
 
 		$tags1=$this->get_tags();
 		$tags2=$this->get_tags();
@@ -56,7 +60,7 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 			for ($j=$i+1; $j<$len; $j++)
 			{
 				$tag2=$tags2[$j];
-				if($this->compare_terms($tag1->name, $tag2->name, $maxdistance))
+				if($this->compare_terms($tag1->name, $tag2->name, $levenshtein, $maxdistance))
 					array_push($similar_tags, array($tag1,$tag2));
 			}
 		}
@@ -65,8 +69,11 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 
 	public function similar_categories()
 	{
-		$options = get_option( 'configuration' );
+		$options = get_option( 'duplicated-configuration' );
+		if(isset($options['levenshtein'])) 	$levenshtein=true;
+		else $levenshtein=false;
 		$maxdistance = $options['maxDistance'];
+		if($maxdistance=="") $maxdistance=0;
 
 		$cats1=$this->get_categories();
 		$cats2=$this->get_categories();
@@ -78,7 +85,7 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 			for ($j=$i+1; $j<$len; $j++)
 			{
 				$cat2=$cats2[$j];
-				if($this->compare_terms($cat1->name, $cat2->name, $maxdistance))
+				if($this->compare_terms($cat1->name, $cat2->name, $levenshtein, $maxdistance))
 					array_push($similar_cats, array($cat1,$cat2));
 
 			}
@@ -88,8 +95,11 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 
 	public function similar_terms()
 	{
-		$options = get_option( 'configuration' );
+		$options = get_option( 'duplicated-configuration' );
+		if(isset($options['levenshtein'])) 	$levenshtein=true;
+		else $levenshtein=false;
 		$maxdistance = $options['maxDistance'];
+		if($maxdistance=="") $maxdistance=0;
 
 		$cats=$this->get_categories();
 		$tags=$this->get_tags();
@@ -101,7 +111,7 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 			for ($j=0, $len_tags=count($tags); $j<$len_tags; $j++)
 			{
 				$tag=$tags[$j];
-				if($this->compare_terms($cat->name, $tag->name, $maxdistance))
+				if($this->compare_terms($cat->name, $tag->name, $levenshtein, $maxdistance))
 					array_push($similar_terms, array($cat,$tag));
 
 			}
@@ -124,46 +134,45 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 				$objects_term_keep = get_posts( array(
 					'numberposts' => - 1,
 					'tax_query'   => array(
-						array( 'field' => 'term_id', 'terms' => $term_keep->term_id, 'include_children' => false )
+						'relation' => 'OR',
+						array( 'taxonomy' => 'category','field' => 'term_id', 'terms' => $term_keep->term_id, 'include_children' => false,),
+						array( 'taxonomy' => 'post_tag','field' => 'term_id', 'terms' => $term_keep->term_id, 'include_children' => false,)
 					)
 				) );
 
 				$objects_term_remove = get_posts( array(
 					'numberposts' => - 1,
 					'tax_query'   => array(
-						array( 'field' => 'term_id', 'terms' => $term_remove->term_id, 'include_children' => false )
+						'relation' => 'OR',
+						array(  'taxonomy' => 'category','field' => 'term_id', 'terms' => $term_remove->term_id, 'include_children' => false,),
+						array( 'taxonomy' => 'post_tag','field' => 'term_id', 'terms' => $term_remove->term_id, 'include_children' => false,),
 					)
 				) );
 
-				$intersect = array_intersect( $objects_term_keep, $objects_term_remove );
+				$objects_ID_keep = array_map(function($o) { return $o->ID; }, $objects_term_keep);
+				$objects_ID_remove = array_map(function($o) { return $o->ID; }, $objects_term_remove);
+
+				$intersect = array_intersect( $objects_ID_keep, $objects_ID_remove );
 				foreach ( $intersect as $repeated ) {
-					$wpdb->delete( $wpdb->prefix .'term_relationships', array( 'term_taxonomy_id' => $term_remove->term_taxonomy_id ), array( '%d' ) );
+					$wpdb->delete( $wpdb->prefix .'term_relationships', array( 'term_taxonomy_id' => $term_remove->term_taxonomy_id, 'object_id' => $repeated ), array( '%d', '%d' ) );
 				}
 				//We can now update at once all the rest
 				$updated = $wpdb->update( $wpdb->prefix . 'term_relationships', array( 'term_taxonomy_id' => $term_keep->term_taxonomy_id ),
 					array( 'term_taxonomy_id' => $term_remove->term_taxonomy_id ), array( '%d' ), array( '%d' ) );
 				if ( false !== $updated ) {
-					$wpdb->update( $wpdb->prefix . 'term_taxonomy', array( 'parent' => $term_keep->term_id),array( 'parent' => $term_remove->term_id ), array( '%d' )); //processing potentially dangling children
-					$wpdb->delete( $wpdb->prefix . 'term_taxonomy', array( 'term_taxonomy_id' => $term_remove->term_taxonomy_id ), array( '%d' ),array( '%d' ) );
-					$wpdb->delete( $wpdb->prefix . 'terms', array( 'term_id' => $term_remove->term_id ), array( '%d' ) );
+					$wpdb->update( $wpdb->prefix . 'term_taxonomy', array( 'parent' => $term_keep->term_id),array( 'parent' => $term_remove->term_id ),  array( '%d' ),array( '%d' )); //processing potentially dangling children
+					$wpdb->delete( $wpdb->prefix . 'term_taxonomy', array( 'term_taxonomy_id' => $term_remove->term_taxonomy_id ),array( '%d' ) );
 					$wpdb->delete( $wpdb->prefix . 'termmeta', array( 'term_id' => $term_remove->term_id ), array( '%d' ) );
+					$wpdb->delete( $wpdb->prefix . 'terms', array( 'term_id' => $term_remove->term_id ), array( '%d' ) );
 				}
 			}
 		}
 
-		wp_redirect(admin_url('admin.php?page=analysis' ));
+		wp_redirect(admin_url('admin.php?page=duplicated-analysis' ));
 		exit;
     }
 
-	public function custom_redirect( $admin_notice, $response ) {
-		wp_redirect( esc_url_raw( add_query_arg( array(
-			'nds_admin_add_notice' => $admin_notice,
-			'nds_response' => $response,
-		),
-			admin_url('admin.php?page='. $this->plugin_name )
-		) ) );
 
-	}
 
 }
 	

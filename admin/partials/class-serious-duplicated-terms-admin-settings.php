@@ -39,12 +39,12 @@ class Serious_Duplicated_Terms_Admin_Settings{
 	public function init_settings() {
 		register_setting(
 			'settingsPlugin_group',
-			'configuration');
+			'duplicated-configuration');
 		
 		  	add_settings_section(
 		  		'consider',
 		  		'Check for duplicates in tags, categories or both',
-		  		false, 'configuration'
+		  		false, 'duplicated-configuration'
 		  	
 		  	);
 		 					
@@ -53,7 +53,7 @@ class Serious_Duplicated_Terms_Admin_Settings{
 		 				'tags',
 		 				'Tags', 
 		 				array($this,'render_tags_field'),
-		 				'configuration',
+		 				'duplicated-configuration',
 		 				'consider'
 		 			);
 		 					
@@ -62,7 +62,7 @@ class Serious_Duplicated_Terms_Admin_Settings{
 		 				'categories',
 		 				'Categories', 
 		 				array($this,'render_categories_field'),
-		 				'configuration',
+		 				'duplicated-configuration',
 		 				'consider'
 		 			);
 		 					
@@ -71,16 +71,16 @@ class Serious_Duplicated_Terms_Admin_Settings{
 		  	add_settings_section(
 		  		'distance',
 		  		'Consider Levenshtein Distance',
-		  		false, 'configuration'
+		  		false, 'duplicated-configuration'
 		  	
 		  	);
 		 					
 		 				
 		 			add_settings_field(
 		 				'levenshtein',
-		 				'Levenhstein', 
+		 				'Levenshtein', 
 		 				array($this,'render_levenshtein_field'),
-		 				'configuration',
+		 				'duplicated-configuration',
 		 				'distance'
 		 			);
 		 					
@@ -89,7 +89,7 @@ class Serious_Duplicated_Terms_Admin_Settings{
 		 				'maxDistance',
 		 				'Max Distance', 
 		 				array($this,'render_maxDistance_field'),
-		 				'configuration',
+		 				'duplicated-configuration',
 		 				'distance'
 		 			);
 		 					
@@ -110,7 +110,7 @@ class Serious_Duplicated_Terms_Admin_Settings{
 		echo '	<h1>' . get_admin_page_title() . '</h1>' . "\n";
 		echo '	<form action="options.php" method="post">' . "\n";
 		settings_fields( 'settingsPlugin_group' );
-		do_settings_sections( 'configuration' );
+		do_settings_sections( 'duplicated-configuration' );
 		submit_button();
 		echo '</form>' . "\n";
 		echo '</div>' . "\n";
@@ -121,32 +121,32 @@ class Serious_Duplicated_Terms_Admin_Settings{
 	*/
 	public function render_tags_field() {
 		// Retrieve the full set of options
-		$options = get_option( 'configuration' );
+		$options = get_option( 'duplicated-configuration' );
 		// Field output.
 		$checked = isset( $options['tags'] ) ? $options['tags'] : '0';
-		echo '<input type="checkbox" name="configuration[tags]" value="1"'  . checked(1, $checked, false) .'/>';
+		echo '<input type="checkbox" name="duplicated-configuration[tags]" value="1"'  . checked(1, $checked, false) .'/>';
 	}
 	public function render_categories_field() {
 		// Retrieve the full set of options
-		$options = get_option( 'configuration' );
+		$options = get_option( 'duplicated-configuration' );
 		// Field output.
 		$checked = isset( $options['categories'] ) ? $options['categories'] : '0';
-		echo '<input type="checkbox" name="configuration[categories]" value="1"'  . checked(1, $checked, false) .'/>';
+		echo '<input type="checkbox" name="duplicated-configuration[categories]" value="1"'  . checked(1, $checked, false) .'/>';
 	}
 	public function render_levenshtein_field() {
 		// Retrieve the full set of options
-		$options = get_option( 'configuration' );
+		$options = get_option( 'duplicated-configuration' );
 		// Field output.
 		$checked = isset( $options['levenshtein'] ) ? $options['levenshtein'] : '0';
-		echo '<input type="checkbox" name="configuration[levenshtein]" value="1"'  . checked(1, $checked, false) .'/>';
+		echo '<input type="checkbox" name="duplicated-configuration[levenshtein]" value="1"'  . checked(1, $checked, false) .'/>';
 	}
 	public function render_maxDistance_field() {
 		// Retrieve the full set of options
-		$options = get_option( 'configuration' );
+		$options = get_option( 'duplicated-configuration' );
 		// Field output.
 		// Set default value for this particular option in the group
 		$value = isset( $options['maxDistance'] ) ? $options['maxDistance'] : '3';
-		echo '<input type="number" name="configuration[maxDistance]" size="10" value="' . esc_attr( $value ).'" />';
+		echo '<input type="number" name="duplicated-configuration[maxDistance]" size="10" value="' . esc_attr( $value ).'" />';
 	}
 }
  		

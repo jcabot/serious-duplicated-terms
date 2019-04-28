@@ -44,23 +44,23 @@ class Serious_Duplicated_Terms_Admin_Display{
 		'Analysis Duplicated Terms'		
 		,'Serious Duplicated Terms'
 		,'manage_options' 
-		,'analysis'
+		,'duplicated-analysis'
 		,array($this,'analysis_duplicated_terms')		
 		);						
 	add_submenu_page(
-		'analysis' 
+		'duplicated-analysis' 
 		,'Analysis Duplicated Terms'		
 		,'Analysis'
 		,'manage_options' 
-		,'analysis'
+		,'duplicated-analysis'
 		,array($this,'analysis_duplicated_terms')		
 		);						
 	add_submenu_page(
-		'analysis' 
+		'duplicated-analysis' 
 		,'Configuration Duplicated Terms'		
 		,'Configuration'
 		,'manage_options' 
-		,'configuration'
+		,'duplicated-configuration'
 		,array($this->settings,'configuration_duplicated_terms')		
 		);						
 	}
