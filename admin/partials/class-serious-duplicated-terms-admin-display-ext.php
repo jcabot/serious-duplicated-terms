@@ -18,6 +18,11 @@ class Serious_Duplicated_Terms_Admin_Display_Ext extends Serious_Duplicated_Term
 	 *  Rendering functions for the admin menu options
 	 */
 	public function	analysis_duplicated_terms() {
+
+		if ( !current_user_can( 'manage_options' ) )  {
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
+		}
+
 		echo '<div class="wrap">' . "\n";
 		echo '<h1>' . 'Analysis Duplicated Terms'. '</h1>' . "\n";
 		echo '<i> (before taking any action, we strongly recommend you to create first a backup of your WordPress site) </i>';
