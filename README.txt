@@ -1,52 +1,47 @@
-=== Serious Daily Writing Habit ===
+=== Serious Duplicated Terms ===
 Contributors: softmodeling, seriouswp
-Tags: writing, habit, daily, words, word counting
+Tags: terms, taxonomy, duplicates, category, tag, merge
 Requires at least: 4.3
-Tested up to: 5.0.3
+Tested up to: 5.1
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Develop a writing habit by setting and tracking a daily writing goal.
+Merge duplicated tags and categories to better organize the content of your site
 
 == Description ==
 
-Good writing requires practice. This plugin helps you to form a daily writing habit by setting a daily writing goal and checking your progress against that goal.
+Once a site starts growing, it always ends up with repeated tags and categories. Sometimes, you create a new category when you were before using a tag. Or you just forget about old tags and en up writing new ones with a very similar name.
 
-In the *Writing goals* page you can define your desired writing target and the number of days to track. This second parameter is used when visualizing the report.
+This damages the organization your content and the quality of the user navigation on your site. 
 
-A widget in the *dashboard* will immediately remind you the writing goal and give feedback on how far you are today from the goal.
+This plugin helps you to quickly identify (too) similar tags and categories and gives you the option to merge them to simplify your site taxonomies. 
 
-In the *Report* page you'll see a bar chart displaying the word counts from the last days plus two horizontal lines:
+In the *Configuration* page you can define how close term names should be to be considered duplicates. 
 
-1. The target goal
-2. Your writing average in the last days
-
-This will help you to quickly see your progress (and hopefully, encourage you to write more!).
+In the *Analysis* page you can review the duplications and decide which ones to merge. 
 
 
 == Installation ==
 
 Install and Activate the plugin through the 'Plugins' menu in WordPress
 
+
 == Frequently Asked Questions ==
 
-= Does removing text hampers achieving my writing goal? =
+= Should I create a backup of my site before using the plugin? =
 
-No. Removing text from old posts does not damages your word counting
+Yes. Always create a backup of your site before taking any action that modifies your site data
 
-= Are HTML characters or shortcodes counted as words? =
+= Does the plugin work with custom taxonomies? =
 
-No. They are all stripped before the counting takes place
+No. Only the standard tag and categories taxonomies are taken into account
 
-= Can I set a weekly goal? =
+= Does the plugin automatically create redirections for the merged tags and categories? =
 
-Not for now. Only a daily goal is supported.
+No. If you do index individual tag and category pages (not always recommended) you will need to create the redirections manually. 
 
-= What about sites with multiple authors? =
-
-The word counting process is global. Right now, all the writing of all authors is added up.
 
 == Changelog ==
 
