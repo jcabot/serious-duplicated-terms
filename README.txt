@@ -38,10 +38,19 @@ Yes. Always create a backup of your site before taking any action that modifies 
 
 No. Only the standard tag and categories taxonomies are taken into account
 
+= Does the plugin reassign posts automatically? =
+
+Yes. All posts tagged or assigned to categories that are merged are automatically reassigned to the merged term.
+
 = Does the plugin automatically create redirections for the merged tags and categories? =
 
 No. If you do index individual tag and category pages (not always recommended) you will need to create the redirections manually. 
 
+
+== Screenshots ==
+
+1. Configuration page for the plugin
+2. Analysis page showing the duplicated categories and tags
 
 == Changelog ==
 
