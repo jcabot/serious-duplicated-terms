@@ -69,6 +69,8 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 
 	public function similar_categories()
 	{
+		error_log('---- Computing similarity of categories ---');
+
 		$options = get_option( 'duplicated-configuration' );
 		if(isset($options['levenshtein'])) 	$levenshtein=true;
 		else $levenshtein=false;
@@ -85,6 +87,7 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 			for ($j=$i+1; $j<$len; $j++)
 			{
 				$cat2=$cats2[$j];
+				error_log(print_r($cat1 ,true));
 				if($this->compare_terms($cat1->name, $cat2->name, $levenshtein, $maxdistance))
 					array_push($similar_cats, array($cat1,$cat2));
 
@@ -120,13 +123,15 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 	}
 
 	public function manage_duplicates() {
+		error_log('---- Managing duplicates ---');
 		global $wpdb;
 		foreach($_POST as $key=>$post_data) {
 
 			//echo "You posted:" . $key . " = " . $post_data . "<br>";
 			//get the term_taxonomy_id for the terms
+			error_log(print_r($key ,true));
 			if($key!='action' && $key!='submit') {
-				$term_keep   = get_term( $key, '', OBJECT );
+				$term_keep   = get_term( substr($key,4), '', OBJECT );
 				$term_remove = get_term( $post_data, '', OBJECT );
 
 				//We first remove the term_relationships of posts linked to the term to remove that are already linked with the new term to avoid errors due to duplicaton

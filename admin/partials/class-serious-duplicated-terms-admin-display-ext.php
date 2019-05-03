@@ -46,7 +46,7 @@ class Serious_Duplicated_Terms_Admin_Display_Ext extends Serious_Duplicated_Term
 				foreach ( $similar_tags as $couple ) {
 					$tag1 = $couple[0];
 					$tag2 = $couple[1];
-					echo '<tr><td>' . $tag1->name . '</td><td>' . $tag2->name . '</td><td><input type="checkbox" name="' . $tag1->term_id . '" value="' . $tag2->term_id . '" /> </td></tr>';
+					echo '<tr><td>' . $tag1->name . '</td><td>' . $tag2->name . '</td><td><input type="checkbox" name="' . "term".$tag1->term_id . '" value="' . $tag2->term_id . '" /> </td></tr>';
 				}
 				echo '</table>';
 				submit_button();
@@ -75,7 +75,7 @@ class Serious_Duplicated_Terms_Admin_Display_Ext extends Serious_Duplicated_Term
 				foreach ( $similar_cats as $couple ) {
 					$cat1 = $couple[0];
 					$cat2 = $couple[1];
-					echo '<tr><td>' . $cat1->name . '</td><td>' . $cat2->name . '</td><td><input type="checkbox" name="' . $cat1->term_id . '" value="' . $cat2->term_id . '" /> </td></tr>';
+					echo '<tr><td>' . $cat1->name . '</td><td>' . $cat2->name . '</td><td><input type="checkbox" name="' . "term". $cat1->term_id . '" value="' . $cat2->term_id . '" /> </td></tr>';
 				}
 				echo '</table>';
 				submit_button();
@@ -104,7 +104,7 @@ class Serious_Duplicated_Terms_Admin_Display_Ext extends Serious_Duplicated_Term
 				foreach ( $similar_terms as $couple ) {
 					$cat = $couple[0];
 					$tag = $couple[1];
-					echo '<tr><td>' . $cat->name . '</td><td>' . $tag->name . '</td><td><input type="checkbox" name="' . $cat->term_id . '" value="' . $tag->term_id . '" /> </td></tr>';
+					echo '<tr><td>' . $cat->name . '</td><td>' . $tag->name . '</td><td><input type="checkbox" name="' . "term". $cat->term_id . '" value="' . $tag->term_id . '" /> </td></tr>';
 				}
 				echo '</table>';
 				submit_button();
