@@ -46,7 +46,7 @@ vendor/bin/*
 !vendor/bin/tests/
 
 vendor/bin/tests/*
-!vendor/bin/tests/acceptance/    		
+!vendor/bin/tests/acceptance/
 
 wpcs/
 composer.json
