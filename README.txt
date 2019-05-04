@@ -57,5 +57,14 @@ Try checking the *Equal names only* in the *Configuration* page to avoid conside
 
 == Changelog ==
 
+= 1.1 =
+* Added option to signal as duplicates only terms with the same exact name
+
 = 1.0 =
 * Initial release
+
+
+== Upgrade Notice ==
+
+= 1.1 =
+* Now you can reduce the number of false positives in large sites by enforcing equal names in the detection of duplicates
