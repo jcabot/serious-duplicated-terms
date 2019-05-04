@@ -25,25 +25,34 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 	 * Comparing the two strings for similarity
 	 *
 	 **/
-	public function compare_terms( $a, $b, $levenshtein, $max_distance){
-		$similars=false;
-		if( strcasecmp($a, $b) == 0 ) return true; //case insensitive comparison
+	public function compare_terms( $a, $b, $strict, $levenshtein, $max_distance) {
+		if ( strcasecmp( $a, $b ) == 0 ) {
+			return true;
+		} //case insensitive comparison
 
-		$pos1 = stripos($a, $b);
-		$pos2 = stripos($b, $a);
-		if ($pos1 !== false || $pos2 !== false) return true;
+		if ( ! $strict ) { // If we're not restricting the comparison to equal names then we keep trying
+			$pos1 = stripos( $a, $b );
+			$pos2 = stripos( $b, $a );
+			if ( $pos1 !== false || $pos2 !== false ) {
+				return true;
+			}
 
-		if($levenshtein)
-		{
-			$distance = levenshtein($a, $b);
-			if($distance>-1 && $distance<=$max_distance) return true;
+			if ( $levenshtein ) {
+				$distance = levenshtein( $a, $b );
+				if ( $distance > - 1 && $distance <= $max_distance ) {
+					return true;
+				}
+			}
 		}
+
 		return false;
 	}
 
 	public function similar_tags()
 	{
 		$options = get_option( 'duplicated-configuration' );
+		if(isset($options['strict'])) 	$strict=true;
+		else $strict=false;
 		if(isset($options['levenshtein'])) 	$levenshtein=true;
 		else $levenshtein=false;
 
@@ -60,7 +69,7 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 			for ($j=$i+1; $j<$len; $j++)
 			{
 				$tag2=$tags2[$j];
-				if($this->compare_terms($tag1->name, $tag2->name, $levenshtein, $maxdistance))
+				if($this->compare_terms($tag1->name, $tag2->name, $strict, $levenshtein, $maxdistance))
 					array_push($similar_tags, array($tag1,$tag2));
 			}
 		}
@@ -69,11 +78,12 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 
 	public function similar_categories()
 	{
-		error_log('---- Computing similarity of categories ---');
-
 		$options = get_option( 'duplicated-configuration' );
+		if(isset($options['strict'])) 	$strict=true;
+		else $strict=false;
 		if(isset($options['levenshtein'])) 	$levenshtein=true;
 		else $levenshtein=false;
+
 		$maxdistance = $options['maxDistance'];
 		if($maxdistance=="") $maxdistance=0;
 
@@ -87,8 +97,8 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 			for ($j=$i+1; $j<$len; $j++)
 			{
 				$cat2=$cats2[$j];
-				error_log(print_r($cat1 ,true));
-				if($this->compare_terms($cat1->name, $cat2->name, $levenshtein, $maxdistance))
+			//	error_log(print_r($cat1 ,true));
+				if($this->compare_terms($cat1->name, $cat2->name, $strict, $levenshtein, $maxdistance))
 					array_push($similar_cats, array($cat1,$cat2));
 
 			}
@@ -99,6 +109,8 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 	public function similar_terms()
 	{
 		$options = get_option( 'duplicated-configuration' );
+		if(isset($options['strict'])) 	$strict=true;
+		else $strict=false;
 		if(isset($options['levenshtein'])) 	$levenshtein=true;
 		else $levenshtein=false;
 		$maxdistance = $options['maxDistance'];
@@ -114,7 +126,7 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 			for ($j=0, $len_tags=count($tags); $j<$len_tags; $j++)
 			{
 				$tag=$tags[$j];
-				if($this->compare_terms($cat->name, $tag->name, $levenshtein, $maxdistance))
+				if($this->compare_terms($cat->name, $tag->name, $strict, $levenshtein, $maxdistance))
 					array_push($similar_terms, array($cat,$tag));
 
 			}

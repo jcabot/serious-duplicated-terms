@@ -1,0 +1,49 @@
+plugin SeriousDuplicatedTerms
+{
+	pluginName 'Serious Duplicated Terms'
+	since '1.0.0' 
+	link 'https://wordpress.org/plugins/serious-duplicated-terms/' 
+	author 'Jordi Cabot'
+	authorURI 'https://seriouswsp.com'
+	description 'Finding and merging quasi-duplicated terms'
+	
+	options 
+	{ 
+		gitIgnore   
+		extendedAdminClasses
+	}
+		
+	admin pluginAdmin
+	{ 
+	  menu pluginMenu {
+		menuitem DuplicatedTermsMenu: new {
+	   	  	title 'Serious Duplicated Terms'
+	   	  	pageTitle 'Analysis Duplicated Terms'
+	   	  	slug 'duplicated-analysis'
+   		}
+   	    menuitem DuplicatedTermsReport: new under DuplicatedTermsMenu {
+	   	  	title 'Analysis'
+	   	  	pageTitle 'Analysis Duplicated Terms'
+	   	  	slug 'duplicated-analysis'
+   	 	}
+   	    menuitem DuplicatedTermsConfig : new under DuplicatedTermsMenu {
+	   	  	title 'Configuration'
+	   	 	pageTitle 'Configuration Duplicated Terms' 
+	   	 	slug 'duplicated-configuration'
+        }
+      }
+	 	  
+	  settings settingsPlugin : page pluginMenu.DuplicatedTermsConfig 
+	   {
+	  	section consider : desc 'Check for duplicates in tags, categories or both' fields {
+	  		option tags : desc 'Tags' type boolean 
+	  		option categories : desc 'Categories' type boolean }
+	  	section distance: desc 'Comparison configuration' fields{
+	  		option strict: desc 'Equal names only' type boolean
+	  		option levenshtein: desc 'Use Levenshtein distance' type boolean 
+	  		option maxDistance: desc 'Max Distance' type number default '3' 	}
+	   }
+	}
+        
+ //   publicview
+}

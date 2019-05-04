@@ -46,6 +46,9 @@ Yes. All posts tagged or assigned to categories that are merged are automaticall
 
 No. If you do index individual tag and category pages (not always recommended) you will need to create the redirections manually. 
 
+= I see too many similar tags/categories in the analysis page =
+
+Try checking the *Equal names only* in the *Configuration* page to avoid considering as similars tags/categories that are substring of other ones (which could trigger many results if you use very short term names).
 
 == Screenshots ==
 

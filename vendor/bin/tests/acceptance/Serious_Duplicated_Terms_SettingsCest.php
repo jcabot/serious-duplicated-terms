@@ -18,6 +18,7 @@ class Serious_Duplicated_Terms_SettingsCest
 		$I->checkOption('duplicated-configuration[tags]');
 		$I->checkOption('duplicated-configuration[categories]');
 		$I->checkOption('duplicated-configuration[levenshtein]');
+		$I->checkOption('duplicated-configuration[strict]');
 		$I->fillField('duplicated-configuration[maxDistance]',3);
 		$I->click('Save Changes');
 
@@ -27,6 +28,7 @@ class Serious_Duplicated_Terms_SettingsCest
 		$I->seeCheckboxIsChecked('duplicated-configuration[tags]');
 		$I->seeCheckboxIsChecked('duplicated-configuration[categories]');
 		$I->seeCheckboxIsChecked('duplicated-configuration[levenshtein]');
+		$I->seeCheckboxIsChecked('duplicated-configuration[strict]');
 		$I->seeInField('duplicated-configuration[maxDistance]',3);
 
 	}

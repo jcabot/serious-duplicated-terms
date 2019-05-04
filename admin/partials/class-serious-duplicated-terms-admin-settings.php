@@ -70,15 +70,24 @@ class Serious_Duplicated_Terms_Admin_Settings{
 		
 		  	add_settings_section(
 		  		'distance',
-		  		'Consider Levenshtein Distance',
+		  		'Comparison configuration',
 		  		false, 'duplicated-configuration'
 		  	
 		  	);
 		 					
 		 				
 		 			add_settings_field(
+		 				'strict',
+		 				'Equal names only', 
+		 				array($this,'render_strict_field'),
+		 				'duplicated-configuration',
+		 				'distance'
+		 			);
+		 					
+		 				
+		 			add_settings_field(
 		 				'levenshtein',
-		 				'Levenshtein', 
+		 				'Use Levenshtein distance', 
 		 				array($this,'render_levenshtein_field'),
 		 				'duplicated-configuration',
 		 				'distance'
@@ -132,6 +141,13 @@ class Serious_Duplicated_Terms_Admin_Settings{
 		// Field output.
 		$checked = isset( $options['categories'] ) ? $options['categories'] : '0';
 		echo '<input type="checkbox" name="duplicated-configuration[categories]" value="1"'  . checked(1, $checked, false) .'/>';
+	}
+	public function render_strict_field() {
+		// Retrieve the full set of options
+		$options = get_option( 'duplicated-configuration' );
+		// Field output.
+		$checked = isset( $options['strict'] ) ? $options['strict'] : '0';
+		echo '<input type="checkbox" name="duplicated-configuration[strict]" value="1"'  . checked(1, $checked, false) .'/>';
 	}
 	public function render_levenshtein_field() {
 		// Retrieve the full set of options
