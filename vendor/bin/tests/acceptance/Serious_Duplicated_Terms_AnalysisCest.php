@@ -21,7 +21,7 @@ class Serious_Duplicated_Terms_AnalysisCest
 
 	}
 
-/*
+
 	// tests
 	public function detectedDuplicates(AcceptanceTester $I)
 	{
@@ -63,7 +63,6 @@ class Serious_Duplicated_Terms_AnalysisCest
 		$I->see("taga");
 	}
 
-*/
 	// tests
 	public function removeDuplicatesNotInPosts(AcceptanceTester $I)
 	{
@@ -99,4 +98,28 @@ class Serious_Duplicated_Terms_AnalysisCest
 		$I->seeTermInDatabase(['term_id' => $mixcat, 'taxonomy' => 'category']);
 		$I->dontSeeTermInDatabase(['term_id' => $mixtag, 'taxonomy' => 'post_tag']);
 	}
+
+
+	/* Test pending of a potential bug in the testing framework
+	public function removeDuplicatesWithPostReassignment(AcceptanceTester $I) {
+
+		// Testing removal of duplicate categories
+		$cat1 = $I->factory()->term->create(array('name' => 'testname', 'taxonomy' => 'category'));
+		$cat2 = $I->factory()->term->create(array('name' => 'testrname', 'taxonomy' => 'category'));
+
+		$post = $I->factory()->post->create( array( 'post_title' => 'Test Post report', 'post_content' => 'a first 4words post ',
+		                                    'post_author'=>'1'));
+
+		$I->factory()->term->add_post_terms($post, [$cat2], 'category');
+
+		$I->seePostWithTermInDatabase($post, $cat2 );
+
+		$I->amOnAdminPage('admin.php?page=duplicated-analysis');
+		$I->checkOption('term'.$cat1);
+		$I->click('Save Changes');
+		$I->seeTermInDatabase(['term_id' => $cat1, 'taxonomy' => 'category']);
+		$I->dontSeeTermInDatabase(['term_id' => $cat2, 'taxonomy' => 'category']);
+		$I->seePostWithTermInDatabase($post, $cat1 );
+
+	}*/
 }
