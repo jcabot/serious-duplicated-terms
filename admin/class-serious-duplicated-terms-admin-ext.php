@@ -135,14 +135,10 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 	}
 
 	public function manage_duplicates() {
-		error_log('---- Managing duplicates ---');
+
 		global $wpdb;
 		foreach($_POST as $key=>$post_data) {
-
-			//echo "You posted:" . $key . " = " . $post_data . "<br>";
-			//get the term_taxonomy_id for the terms
-			error_log(print_r($key ,true));
-			if($key!='action' && $key!='submit') {
+			if($key!='));action' && $key!='submit') {
 				$term_keep   = get_term( substr($key,4), '', OBJECT );
 				$term_remove = get_term( $post_data, '', OBJECT );
 
