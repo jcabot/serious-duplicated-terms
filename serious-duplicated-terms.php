@@ -16,7 +16,7 @@
  * Plugin Name:       Serious Duplicated Terms
  * Plugin URI:        https://wordpress.org/plugins/serious-duplicated-terms
  * Description:       Finding and merging quasi-duplicated terms
- * Version:           1.0.0
+ * Version:           1.1.0
  * Author:            Jordi Cabot
  * Author URI:        https://seriouswsp.com
  * License:           GPL-2.0+
