@@ -57,6 +57,9 @@ Try checking the *Equal names only* in the *Configuration* page to avoid conside
 
 == Changelog ==
 
+= 1.1.1 =
+* Cleaned error messages
+
 = 1.1 =
 * Added option to signal as duplicates only terms with the same exact name
 

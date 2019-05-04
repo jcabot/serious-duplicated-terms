@@ -16,7 +16,7 @@
  * Plugin Name:       Serious Duplicated Terms
  * Plugin URI:        https://wordpress.org/plugins/serious-duplicated-terms
  * Description:       Finding and merging quasi-duplicated terms
- * Version:           1.1.0
+ * Version:           1.1.1
  * Author:            Jordi Cabot
  * Author URI:        https://seriouswsp.com
  * License:           GPL-2.0+
@@ -44,7 +44,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'SERIOUS_DUPLICATED_TERMS', '1.1.0' );
+define( 'SERIOUS_DUPLICATED_TERMS', '1.1.1' );
 
 /**
  * The code that runs during plugin activation.
