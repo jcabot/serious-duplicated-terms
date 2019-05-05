@@ -50,6 +50,10 @@ No. If you do index individual tag and category pages (not always recommended) y
 
 Try checking the *Equal names only* in the *Configuration* page to avoid considering as similars tags/categories that are substring of other ones (which could trigger many results if you use very short term names).
 
+= I have merged a term but it shows up again in the list of duplicates =
+
+Some hosting provideres are very aggressive with their caching strategy and store the results of some queries to avoid recalculating them. This could produce this effect. Just ignore the duplicate, since it has been already fixed, and it will disappear on its own later on once the provider flushes the cache.
+
 == Screenshots ==
 
 1. Configuration page for the plugin
