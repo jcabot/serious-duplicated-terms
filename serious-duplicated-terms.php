@@ -18,7 +18,7 @@
  * Description:       Finding and merging quasi-duplicated terms
  * Version:           1.1.1
  * Author:            Jordi Cabot
- * Author URI:        https://seriouswsp.com
+ * Author URI:        https://seriouswp.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       serious-duplicated-terms
