@@ -28,7 +28,7 @@ class Serious_Duplicated_Terms_Admin_Display_Ext extends Serious_Duplicated_Term
 		echo '<i> (before taking any action, we strongly recommend you to create first a backup of your WordPress site) </i>';
 		echo '</div>' . "\n";
 
-		$options = get_option( 'duplicated-configuration' );
+		$options = get_option( 'duplicated' );
 
 		if(isset($options['tags'])){
 			$similar_tags = $this->admin->similar_tags();

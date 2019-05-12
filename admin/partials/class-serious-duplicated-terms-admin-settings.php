@@ -38,15 +38,14 @@ class Serious_Duplicated_Terms_Admin_Settings{
 	 */
 	public function init_settings() {
 		register_setting(
-			'settingsPlugin_group',
-			'duplicated-configuration');
+			'duplicated_group',
+			'duplicated');						
+		add_settings_section(
+			'consider',
+			'Check for duplicates in tags, categories or both',
+			false, 'duplicated-configuration'
 		
-		  	add_settings_section(
-		  		'consider',
-		  		'Check for duplicates in tags, categories or both',
-		  		false, 'duplicated-configuration'
-		  	
-		  	);
+		);
 		 					
 		 				
 		 			add_settings_field(
@@ -67,13 +66,12 @@ class Serious_Duplicated_Terms_Admin_Settings{
 		 			);
 		 					
 		 			
+		add_settings_section(
+			'distance',
+			'Comparison configuration',
+			false, 'duplicated-configuration'
 		
-		  	add_settings_section(
-		  		'distance',
-		  		'Comparison configuration',
-		  		false, 'duplicated-configuration'
-		  	
-		  	);
+		);
 		 					
 		 				
 		 			add_settings_field(
@@ -118,7 +116,7 @@ class Serious_Duplicated_Terms_Admin_Settings{
 		echo '<div class="wrap">' . "\n";
 		echo '	<h1>' . get_admin_page_title() . '</h1>' . "\n";
 		echo '	<form action="options.php" method="post">' . "\n";
-		settings_fields( 'settingsPlugin_group' );
+		settings_fields( 'duplicated_group' );
 		do_settings_sections( 'duplicated-configuration' );
 		submit_button();
 		echo '</form>' . "\n";
@@ -130,39 +128,39 @@ class Serious_Duplicated_Terms_Admin_Settings{
 	*/
 	public function render_tags_field() {
 		// Retrieve the full set of options
-		$options = get_option( 'duplicated-configuration' );
+		$options = get_option( 'duplicated' );
 		// Field output.
 		$checked = isset( $options['tags'] ) ? $options['tags'] : '0';
-		echo '<input type="checkbox" name="duplicated-configuration[tags]" value="1"'  . checked(1, $checked, false) .'/>';
+		echo '<input type="checkbox" name="duplicated[tags]" value="1"'  . checked(1, $checked, false) .'/>';
 	}
 	public function render_categories_field() {
 		// Retrieve the full set of options
-		$options = get_option( 'duplicated-configuration' );
+		$options = get_option( 'duplicated' );
 		// Field output.
 		$checked = isset( $options['categories'] ) ? $options['categories'] : '0';
-		echo '<input type="checkbox" name="duplicated-configuration[categories]" value="1"'  . checked(1, $checked, false) .'/>';
+		echo '<input type="checkbox" name="duplicated[categories]" value="1"'  . checked(1, $checked, false) .'/>';
 	}
 	public function render_strict_field() {
 		// Retrieve the full set of options
-		$options = get_option( 'duplicated-configuration' );
+		$options = get_option( 'duplicated' );
 		// Field output.
 		$checked = isset( $options['strict'] ) ? $options['strict'] : '0';
-		echo '<input type="checkbox" name="duplicated-configuration[strict]" value="1"'  . checked(1, $checked, false) .'/>';
+		echo '<input type="checkbox" name="duplicated[strict]" value="1"'  . checked(1, $checked, false) .'/>';
 	}
 	public function render_levenshtein_field() {
 		// Retrieve the full set of options
-		$options = get_option( 'duplicated-configuration' );
+		$options = get_option( 'duplicated' );
 		// Field output.
 		$checked = isset( $options['levenshtein'] ) ? $options['levenshtein'] : '0';
-		echo '<input type="checkbox" name="duplicated-configuration[levenshtein]" value="1"'  . checked(1, $checked, false) .'/>';
+		echo '<input type="checkbox" name="duplicated[levenshtein]" value="1"'  . checked(1, $checked, false) .'/>';
 	}
 	public function render_maxDistance_field() {
 		// Retrieve the full set of options
-		$options = get_option( 'duplicated-configuration' );
+		$options = get_option( 'duplicated' );
 		// Field output.
 		// Set default value for this particular option in the group
 		$value = isset( $options['maxDistance'] ) ? $options['maxDistance'] : '3';
-		echo '<input type="number" name="duplicated-configuration[maxDistance]" size="10" value="' . esc_attr( $value ).'" />';
+		echo '<input type="number" name="duplicated[maxDistance]" size="10" value="' . esc_attr( $value ).'" />';
 	}
 }
  		

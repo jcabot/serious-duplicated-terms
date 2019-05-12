@@ -4,8 +4,8 @@ plugin SeriousDuplicatedTerms
 	since '1.0.0' 
 	link 'https://wordpress.org/plugins/serious-duplicated-terms/' 
 	author 'Jordi Cabot'
-	authorURI 'https://seriouswsp.com'
-	description 'Finding and merging quasi-duplicated terms'
+	authorURI 'https://seriouswp.com'
+	description 'Flagging and blocking toxic comments from your site'
 	
 	options 
 	{ 
@@ -33,7 +33,7 @@ plugin SeriousDuplicatedTerms
         }
       }
 	 	  
-	  settings settingsPlugin : page pluginMenu.DuplicatedTermsConfig 
+	  settings duplicated : page pluginMenu.DuplicatedTermsConfig 
 	   {
 	  	section consider : desc 'Check for duplicates in tags, categories or both' fields {
 	  		option tags : desc 'Tags' type boolean 

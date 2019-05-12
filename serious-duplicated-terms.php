@@ -15,8 +15,8 @@
  * @wordpress-plugin
  * Plugin Name:       Serious Duplicated Terms
  * Plugin URI:        https://wordpress.org/plugins/serious-duplicated-terms
- * Description:       Finding and merging quasi-duplicated terms
- * Version:           1.1.1
+ * Description:       Flagging and blocking toxic comments from your site
+ * Version:           1.0.0
  * Author:            Jordi Cabot
  * Author URI:        https://seriouswp.com
  * License:           GPL-2.0+
@@ -44,7 +44,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'SERIOUS_DUPLICATED_TERMS', '1.1.1' );
+define( 'SERIOUS_DUPLICATED_TERMS', '1.0.0' );
 
 /**
  * The code that runs during plugin activation.

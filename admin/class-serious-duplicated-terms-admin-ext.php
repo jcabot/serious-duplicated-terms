@@ -50,7 +50,7 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 
 	public function similar_tags()
 	{
-		$options = get_option( 'duplicated-configuration' );
+		$options = get_option( 'duplicated' );
 		if(isset($options['strict'])) 	$strict=true;
 		else $strict=false;
 		if(isset($options['levenshtein'])) 	$levenshtein=true;
@@ -78,7 +78,7 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 
 	public function similar_categories()
 	{
-		$options = get_option( 'duplicated-configuration' );
+		$options = get_option( 'duplicated' );
 		if(isset($options['strict'])) 	$strict=true;
 		else $strict=false;
 		if(isset($options['levenshtein'])) 	$levenshtein=true;
@@ -108,7 +108,7 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 
 	public function similar_terms()
 	{
-		$options = get_option( 'duplicated-configuration' );
+		$options = get_option( 'duplicated' );
 		if(isset($options['strict'])) 	$strict=true;
 		else $strict=false;
 		if(isset($options['levenshtein'])) 	$levenshtein=true;
@@ -128,7 +128,6 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 				$tag=$tags[$j];
 				if($this->compare_terms($cat->name, $tag->name, $strict, $levenshtein, $maxdistance))
 					array_push($similar_terms, array($cat,$tag));
-
 			}
 		}
 		return $similar_terms;
@@ -138,7 +137,7 @@ class Serious_Duplicated_Terms_Admin_Ext extends Serious_Duplicated_Terms_Admin 
 
 		global $wpdb;
 		foreach($_POST as $key=>$post_data) {
-			if($key!='));action' && $key!='submit') {
+			if($key!='action' && $key!='submit') {
 				$term_keep   = get_term( substr($key,4), '', OBJECT );
 				$term_remove = get_term( $post_data, '', OBJECT );
 
