@@ -1,14 +1,14 @@
 === Serious Duplicated Terms ===
 Contributors: softmodeling, seriouswp
-Tags: terms, taxonomy, duplicates, category, tag, merge
+Tags: terms, taxonomy, duplicates, category, tag, merge, optimization, cleaning
 Requires at least: 4.3
-Tested up to: 5.1
+Tested up to: 5.4
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Merge duplicated tags and categories to better organize the content of your site
+Merge duplicated tags and categories to simplify and better organize the content and navigation of your site
 
 == Description ==
 
@@ -61,6 +61,9 @@ Some hosting provideres are very aggressive with their caching strategy and stor
 
 == Changelog ==
 
+= 1.1.2 =
+* Tested with WordPress 5.4
+
 = 1.1.1 =
 * Cleaned error messages
 
@@ -72,6 +75,9 @@ Some hosting provideres are very aggressive with their caching strategy and stor
 
 
 == Upgrade Notice ==
+
+= 1.1.2 =
+* Tested with WordPress 5.4
 
 = 1.1 =
 * Now you can reduce the number of false positives in large sites by enforcing equal names in the detection of duplicates
