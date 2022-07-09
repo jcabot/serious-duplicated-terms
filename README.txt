@@ -1,8 +1,8 @@
 === Serious Duplicated Terms ===
 Contributors: softmodeling, seriouswp
-Tags: terms, taxonomy, duplicates, category, tag, merge, optimization, cleaning
+Tags: terms, taxonomy, duplicates, category, tag, merge, optimization
 Requires at least: 4.3
-Tested up to: 5.4
+Tested up to: 6.0
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -61,6 +61,9 @@ Some hosting provideres are very aggressive with their caching strategy and stor
 
 == Changelog ==
 
+= 1.1.3 =
+* Tested with WordPress 6.0
+
 = 1.1.2 =
 * Tested with WordPress 5.4
 
@@ -75,6 +78,9 @@ Some hosting provideres are very aggressive with their caching strategy and stor
 
 
 == Upgrade Notice ==
+
+= 1.1.3 =
+* Tested with WordPress 6.0
 
 = 1.1.2 =
 * Tested with WordPress 5.4
